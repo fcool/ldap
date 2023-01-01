@@ -1,5 +1,9 @@
 Neos:
   Ldap:
+    bindMapping:
+      ActiveDirectory: "Neos\\Ldap\\Service\\BindProvider\\ActiveDirectoryBind"
+      Ldap: "Neos\\Ldap\\Service\\BindProvider\\LdapBind"
+
     roles:
       default: []
       groupMapping: []

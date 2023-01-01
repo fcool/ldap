@@ -41,6 +41,12 @@ class DirectoryService
     protected $bindProvider;
 
     /**
+     * @Flow\InjectConfiguration(path="bindMapping")
+     * @var array
+     */
+    protected $bindProviderMapping;
+
+    /**
      * @param string $name
      * @param array $options
      * @throws Exception
@@ -75,11 +81,9 @@ class DirectoryService
             return;
         }
 
-        $bindProviderClass = LdapBind::class;
-        $connectionType = Arrays::getValueByPath($this->options, 'type');
-        if ($connectionType === 'ActiveDirectory') {
-            $bindProviderClass = ActiveDirectoryBind::class;
-        }
+        $connectionType = $this->options['type'] ?? 'Ldap';
+        $bindProviderClass = $this->bindProviderMapping[$connectionType] ?? null;
+
         if (!class_exists($bindProviderClass)) {
             throw new Exception("Bind provider '$bindProviderClass' for the service '$this->name' could not be resolved.", 1327756744);
         }
