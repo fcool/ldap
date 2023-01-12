@@ -62,6 +62,11 @@ class LdapProvider extends PersistedUsernamePasswordProvider
         $this->directoryService = new DirectoryService($name, $options);
     }
 
+    public function getDirectoryService(): DirectoryService
+    {
+        return $this->directoryService;
+    }
+
     /**
      * Authenticate the current token. If it's not possible to connect to the LDAP server the provider
      * tries to authenticate against cached credentials in the database that were
